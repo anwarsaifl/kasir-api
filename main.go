@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"kasir-api/database"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -10,7 +12,8 @@ import (
 )
 
 type Config struct {
-	Port string `mapstructure:"PORT"`
+	Port   string `mapstructure:"PORT"`
+	DBConn string `mapstructure:"DB_CONN"`
 }
 
 func main() {
@@ -23,7 +26,8 @@ func main() {
 	}
 
 	config := Config{
-		Port: viper.GetString("PORT"),
+		Port:   viper.GetString("PORT"),
+		DBConn: viper.GetString("DBConn"),
 	}
 
 	addr := "0.0.0.0:" + config.Port
@@ -33,4 +37,12 @@ func main() {
 	if err != nil {
 		fmt.Println("Server failed to run", err)
 	}
+
+	db, err := database.InitDB(config.DBConn)
+	if err != nil {
+		log.Fatal("Failed to initialize database: ", err)
+	}
+
+	defer db.Close()
+
 }
