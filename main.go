@@ -44,7 +44,7 @@ func main() {
 	defer db.Close()
 
 	http.HandleFunc("/api/product", productHandler.HandleProducts)
-	http.HandleFunc("/api/product", productHandler.HandleProductByID)
+	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
 
 	addr := "0.0.0.0:" + config.Port
 	fmt.Println("Server running on " + addr)
