@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"kasir-api/database"
+	"kasir-api/handlers"
+	"kasir-api/repositories"
+	"kasir-api/services"
 	"log"
 	"net/http"
 	"os"
@@ -35,6 +38,9 @@ func main() {
 		log.Fatal("Failed to initialize database: ", err)
 	}
 
+	productRepo := repositories.NewProductRepository(db)
+	productService := services.NewProductService(productRepo)
+	productHandler := handlers.NewProductHandler(productService)
 	defer db.Close()
 
 	http.HandleFunc("/api/product", productHandler.HandleProducts)
