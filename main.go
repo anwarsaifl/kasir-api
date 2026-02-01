@@ -30,14 +30,6 @@ func main() {
 		DBConn: viper.GetString("DBConn"),
 	}
 
-	addr := "0.0.0.0:" + config.Port
-	fmt.Println("Server running on " + addr)
-
-	err := http.ListenAndServe(addr, nil)
-	if err != nil {
-		fmt.Println("Server failed to run", err)
-	}
-
 	db, err := database.InitDB(config.DBConn)
 	if err != nil {
 		log.Fatal("Failed to initialize database: ", err)
@@ -45,4 +37,14 @@ func main() {
 
 	defer db.Close()
 
+	http.HandleFunc("/api/product", productHandler.HandleProducts)
+	http.HandleFunc("/api/product", productHandler.HandleProductByID)
+
+	addr := "0.0.0.0:" + config.Port
+	fmt.Println("Server running on " + addr)
+
+	err = http.ListenAndServe(addr, nil)
+	if err != nil {
+		fmt.Println("Server failed to run", err)
+	}
 }
