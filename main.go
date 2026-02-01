@@ -33,7 +33,7 @@ func main() {
 		DBConn: viper.GetString("DB_CONN"),
 	}
 
-	db, err := database.InitDB(config.DBConn)
+	db, err := database.InitDB("postgresql://postgres.qvwmchvwxaakcuubuoej:wyzKQTd9SSu2qBUb@aws-1-ap-south-1.pooler.supabase.com:6543/postgres")
 	if err != nil {
 		log.Fatal("Failed to initialize database: ", err)
 	}
