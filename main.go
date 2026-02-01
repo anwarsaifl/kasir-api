@@ -35,7 +35,7 @@ func main() {
 
 	db, err := database.InitDB(config.DBConn)
 	if err != nil {
-		log.Fatal("Failed to initialize database: ", err)
+		log.Fatal("Failed to initialize database: "+config.DBConn, err)
 	}
 
 	productRepo := repositories.NewProductRepository(db)
