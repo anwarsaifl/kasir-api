@@ -33,9 +33,10 @@ func main() {
 		DBConn: viper.GetString("DB_CONN"),
 	}
 
+	// Setup database
 	db, err := database.InitDB(config.DBConn)
 	if err != nil {
-		log.Fatal("Failed to initialize database: "+config.DBConn, err)
+		log.Fatal("Failed to initialize database:", err)
 	}
 
 	productRepo := repositories.NewProductRepository(db)
