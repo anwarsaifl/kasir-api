@@ -30,7 +30,7 @@ func main() {
 
 	config := Config{
 		Port:   viper.GetString("PORT"),
-		DBConn: viper.GetString("DBConn"),
+		DBConn: viper.GetString("DB_CONN"),
 	}
 
 	db, err := database.InitDB(config.DBConn)
